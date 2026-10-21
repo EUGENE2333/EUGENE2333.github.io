@@ -1,64 +1,86 @@
 <title>Eugene Juma</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
 
 <style>
-/* Layout: single-column with full-bleed sections, fixed nav */
 :root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --bg3: #1a1a24;
-  --fg: #e8e8f0;
-  --fg2: #9090a8;
-  --accent: #7c6af7;
-  --accent2: #a89cf7;
-  --border: rgba(124,106,247,0.18);
-  --card: #13131c;
+  --bg:      #08080d;
+  --bg1:     #0f0f17;
+  --bg2:     #16161f;
+  --bg3:     #1e1e2a;
+  --fg:      #f0f0f8;
+  --fg2:     #8888a8;
+  --fg3:     #55556a;
+  --accent:  #0984e3;
+  --accent2: #74b9ff;
+  --accent3: #00cec9;
+  --green:   #55efc4;
+  --border:  rgba(9,132,227,0.18);
+  --border2: rgba(255,255,255,0.06);
   color-scheme: dark;
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #f4f4f8;
-    --bg2: #eeeef4;
-    --bg3: #e5e5ed;
-    --fg: #0e0e18;
-    --fg2: #55556a;
-    --accent: #5b49e8;
-    --accent2: #7c6af7;
-    --border: rgba(91,73,232,0.15);
-    --card: #ffffff;
+    --bg:      #fafafa;
+    --bg1:     #f4f4f6;
+    --bg2:     #eeeef2;
+    --bg3:     #e5e5ec;
+    --fg:      #0a0a12;
+    --fg2:     #55556a;
+    --fg3:     #9090a8;
+    --accent:  #0770c9;
+    --accent2: #0984e3;
+    --accent3: #00b894;
+    --green:   #00b894;
+    --border:  rgba(9,132,227,0.14);
+    --border2: rgba(0,0,0,0.06);
     color-scheme: light;
   }
 }
 :root[data-theme="light"] {
-  --bg: #f4f4f8;
-  --bg2: #eeeef4;
-  --bg3: #e5e5ed;
-  --fg: #0e0e18;
-  --fg2: #55556a;
-  --accent: #5b49e8;
-  --accent2: #7c6af7;
-  --border: rgba(91,73,232,0.15);
-  --card: #ffffff;
+  --bg:      #fafafa;
+  --bg1:     #f4f4f6;
+  --bg2:     #eeeef2;
+  --bg3:     #e5e5ec;
+  --fg:      #0a0a12;
+  --fg2:     #55556a;
+  --fg3:     #9090a8;
+  --accent:  #0770c9;
+  --accent2: #0984e3;
+  --accent3: #00b894;
+  --green:   #00b894;
+  --border:  rgba(9,132,227,0.14);
+  --border2: rgba(0,0,0,0.06);
   color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  height: 100%;
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-block: 0;
+  overflow-x: hidden;
+}
+
+/* GLOW CURSOR */
+#glow {
+  pointer-events: none;
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(9,132,227,0.08) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  transition: opacity 0.3s;
 }
 
 /* NAV */
@@ -67,751 +89,1358 @@ nav {
   top: env(safe-area-inset-top, 0px);
   left: 0; right: 0;
   z-index: 100;
-  background: rgba(10,10,15,0.85);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 max(24px, env(safe-area-inset-left, 0px));
+  padding: 0 max(32px, env(safe-area-inset-left, 0px));
+  transition: background 0.3s, border-color 0.3s;
 }
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
+nav.scrolled {
+  background: rgba(8,8,13,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border2);
 }
-.nav-logo {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  color: var(--accent2);
-  letter-spacing: 0.05em;
-}
-.nav-links {
-  display: flex;
-  gap: 32px;
-  list-style: none;
-}
-.nav-links a {
-  text-decoration: none;
-  color: var(--fg2);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--accent2); }
-
 body::before {
   content: "";
   position: fixed;
   inset: 0 0 auto;
   height: env(safe-area-inset-top, 0px);
   z-index: 101;
-  background: rgba(10,10,15,0.85);
+  background: rgba(8,8,13,0.9);
 }
-
-/* SECTIONS */
-section {
-  max-width: 1100px;
+.nav-inner {
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 100px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--accent2);
+  letter-spacing: 0.02em;
+}
+.nav-logo span { color: var(--fg3); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg2);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent2);
+  transition: width 0.2s;
+}
+.nav-links a:hover { color: var(--fg); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--accent2); }
+.nav-links a.active::after { width: 100%; }
+.nav-cta {
+  padding: 8px 18px;
+  background: var(--accent);
+  color: #fff !important;
+  border-radius: 5px;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  transition: background 0.2s, transform 0.2s !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--accent2) !important; transform: translateY(-1px); }
+
+/* LAYOUT */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* HERO */
+/* ── HERO ── */
 #hero {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 120px;
-  padding-bottom: 60px;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 80px;
 }
-.hero-eyebrow {
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+  width: 100%;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
+  color: var(--accent2);
+  letter-spacing: 0.06em;
+  margin-bottom: 28px;
+}
+.hero-tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(85, 239, 196, 0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(85, 239, 196, 0); }
 }
 .hero-name {
-  font-size: clamp(48px, 8vw, 88px);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-  margin-bottom: 16px;
+  font-size: clamp(44px, 7vw, 80px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
 }
-.hero-name span {
-  background: linear-gradient(135deg, var(--accent2), #c4baff);
+.hero-name-sub {
+  font-size: clamp(44px, 7vw, 80px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--accent2) 0%, #48dbfb 50%, var(--accent3) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin-bottom: 28px;
 }
-.hero-role {
-  font-size: clamp(18px, 2.5vw, 24px);
-  color: var(--fg2);
-  font-weight: 400;
+.hero-desc {
+  font-size: 17px;
+  color: var(--fg);
+  line-height: 1.7;
+  max-width: 480px;
   margin-bottom: 40px;
 }
-.hero-cta {
+.hero-desc strong { color: var(--fg); font-weight: 600; }
+.hero-actions {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
+  margin-bottom: 56px;
 }
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 12px 22px;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.2s;
   cursor: pointer;
   border: none;
+  transition: all 0.2s;
+  letter-spacing: 0.01em;
 }
-.btn-primary {
+.btn-fill {
   background: var(--accent);
   color: #fff;
 }
-.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-.btn-ghost {
+.btn-fill:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(9,132,227,0.3); }
+.btn-outline {
   background: transparent;
   color: var(--fg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border2);
 }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
-
+.btn-outline:hover { border-color: var(--accent); color: var(--accent2); }
 .hero-stats {
   display: flex;
-  gap: 48px;
-  margin-top: 64px;
+  gap: 40px;
   flex-wrap: wrap;
 }
+.stat { display: flex; flex-direction: column; }
 .stat-num {
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--accent2);
-  font-variant-numeric: tabular-nums;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--fg);
   line-height: 1;
 }
 .stat-label {
+  font-size: 16px;
+  color: var(--fg2);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+.hero-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 24px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.avatar-initials {
+  font-size: 56px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent2), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* ── SECTION BASE ── */
+.section {
+  padding: 100px 0;
+}
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.section-eyebrow span {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
+  color: var(--accent2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.eyebrow-line {
+  flex: 1;
+  max-width: 48px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+.section-h {
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 56px;
+}
+
+/* ── PROJECTS GRID ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 20px;
+  row-gap: 48px;
+}
+.proj-card-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.proj-card {
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  display: block;
+  aspect-ratio: 2/3.5;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.proj-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+/* Full-card color background */
+.proj-card-bg {
+  position: absolute;
+  inset: 0;
+}
+/* Phone media — image or video fills card height */
+.proj-card-phone-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.proj-card-phone-img {
+  width: auto;
+  height: 92%;
+  max-width: 90%;
+  flex-shrink: 0;
+  border-radius: 28px;
+  object-fit: cover;
+  filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45));
+}
+.proj-card-phone-video {
+  width: auto;
+  height: 92%;
+  max-width: 90%;
+  flex-shrink: 0;
+  border-radius: 28px;
+  object-fit: cover;
+  filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45));
+}
+/* Placeholder shown while no real asset is set */
+.proj-card-phone-placeholder {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.05);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.proj-card-phone-placeholder svg { opacity: 0.35; }
+/* Bottom overlay with title */
+.proj-card-overlay {
+  position: static;
+  background: none;
+  padding: 0 4px 12px;
+  text-align: left;
+}
+.proj-card-platform {
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg2);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+}
+.proj-card-name {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 6px;
+}
+.proj-card-desc {
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--fg2);
   margin-top: 4px;
 }
-
-/* SECTION HEADERS */
-.section-label {
-  font-family: 'JetBrains Mono', monospace;
+.proj-card-thumb-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
   font-size: 12px;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(85,239,196,0.2);
+  color: var(--green);
+  border: 1px solid rgba(85,239,196,0.35);
+  letter-spacing: 0.08em;
+  font-weight: 500;
 }
-.section-title {
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-  margin-bottom: 48px;
-}
-
-/* DIVIDER */
-.divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-  margin: 0;
+@media (max-width: 600px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .proj-card { aspect-ratio: 2/3.5; }
 }
 
-/* PROJECTS */
-.projects-grid {
-  display: grid;
-  gap: 24px;
+/* ── PROJECT MODAL ── */
+.proj-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 24px max(16px, env(safe-area-inset-left, 0px));
 }
-.project-card {
-  background: var(--card);
+.proj-modal-overlay.open { display: flex; }
+.proj-modal {
+  background: var(--bg1);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
+  border-radius: 18px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
 }
-.project-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-}
-.project-video {
+.proj-modal-header {
   width: 100%;
   aspect-ratio: 16/9;
   background: var(--bg3);
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-.project-video iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-.video-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  color: var(--fg2);
-}
-.play-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-}
-.video-placeholder p {
-  font-size: 13px;
+  font-size: 72px;
+  font-weight: 900;
   font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.06em;
+  opacity: 0.15;
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  position: relative;
+}
+.proj-modal-header-stripe {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 16px,
+    rgba(255,255,255,0.025) 16px,
+    rgba(255,255,255,0.025) 32px
+  );
+}
+.proj-modal-content {
+  padding: 28px 32px 32px;
+}
+.proj-modal-platform {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.proj-modal-name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+.proj-modal-desc {
+  font-size: 15px;
   color: var(--fg2);
-  opacity: 0.6;
+  line-height: 1.75;
+  margin-bottom: 20px;
 }
-.project-body {
-  padding: 28px;
-}
-.project-tags {
+.proj-modal-tags {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
-.tag {
-  font-family: 'JetBrains Mono', monospace;
+.proj-modal-tag {
   font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg3);
+  letter-spacing: 0.04em;
+}
+.proj-modal-tag::before { content: '#'; color: var(--accent); margin-right: 1px; }
+.proj-modal-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.proj-modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.proj-modal-link.primary {
+  background: var(--accent);
+  color: #fff;
+}
+.proj-modal-link.primary:hover { background: var(--accent2); transform: translateY(-1px); }
+.proj-modal-link.secondary {
+  border: 1px solid var(--border2);
+  color: var(--fg2);
+}
+.proj-modal-link.secondary:hover { border-color: var(--accent); color: var(--fg); }
+.proj-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.proj-modal-close:hover { background: rgba(0,0,0,0.7); }
+
+@media (max-width: 768px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .proj-modal-content { padding: 20px; }
+}
+
+/* ── BENTO SKILLS ── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 80px;
+  gap: 10px;
+}
+.bento-cell {
+  background: var(--bg1);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.bento-cell:hover { border-color: var(--border); transform: translateY(-1px); }
+.bento-label {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.bento-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.4;
+}
+.bento-value.accent { color: var(--accent2); }
+.bento-value.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--fg2);
+}
+/* span col/row counts */
+.b-12-2 { grid-column: span 12; grid-row: span 2; }
+.b-4-2  { grid-column: span 4;  grid-row: span 2; }
+.b-4-1  { grid-column: span 4;  grid-row: span 1; }
+.b-3-1  { grid-column: span 3;  grid-row: span 1; }
+.b-3-2  { grid-column: span 3;  grid-row: span 2; }
+.b-6-1  { grid-column: span 6;  grid-row: span 1; }
+.b-6-2  { grid-column: span 6;  grid-row: span 2; }
+.b-8-2  { grid-column: span 8;  grid-row: span 2; }
+
+/* big header cell */
+.bento-hero-cell {
+  grid-column: span 8;
+  grid-row: span 2;
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  border-color: var(--border);
+  justify-content: flex-end;
+  padding: 24px 28px;
+}
+.bento-hero-big {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--fg);
+}
+.bento-hero-sub {
+  font-size: 13px;
+  color: var(--fg2);
+  margin-top: 6px;
+}
+/* stack list cell */
+.stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.stack-chip {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 9px;
+  border-radius: 3px;
   background: var(--bg3);
   color: var(--accent2);
   border: 1px solid var(--border);
-  letter-spacing: 0.04em;
-}
-.project-name {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  letter-spacing: -0.01em;
-}
-.project-desc {
-  color: var(--fg2);
-  font-size: 15px;
-  line-height: 1.65;
-  margin-bottom: 20px;
-}
-.project-meta {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.meta-label {
-  font-size: 11px;
-  color: var(--fg2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-family: 'JetBrains Mono', monospace;
-}
-.meta-value {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--fg);
-}
-.project-links {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-  flex-wrap: wrap;
-}
-
-/* SKILLS */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-.skill-group {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 24px;
-}
-.skill-group-title {
-  font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 16px;
-}
-.skill-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.skill-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.skill-name {
-  font-size: 14px;
-  color: var(--fg);
   white-space: nowrap;
 }
-.skill-bar-track {
-  flex: 1;
-  height: 3px;
-  background: var(--bg3);
-  border-radius: 2px;
-  min-width: 0;
-}
-.skill-bar-fill {
-  height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
+/* tall chip cell */
+.bento-stack-cell {
+  grid-column: span 4;
+  grid-row: span 2;
+  background: var(--bg2);
+  border-color: var(--border2);
+  justify-content: flex-start;
+  padding: 20px 22px;
 }
 
-/* CONTACT */
-#contact {
-  padding-bottom: 120px;
-}
-.contact-grid {
+/* ── ABOUT ── */
+.about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 64px;
   align-items: start;
 }
-.contact-intro {
-  font-size: 18px;
+.about-body {
+  font-size: 16px;
   color: var(--fg2);
-  line-height: 1.7;
-  margin-bottom: 32px;
+  line-height: 1.8;
 }
-.contact-links {
+.about-body p + p { margin-top: 18px; }
+.about-body strong { color: var(--fg); font-weight: 600; }
+.timeline {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
-.contact-link {
+.timeline-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  padding-bottom: 28px;
+  position: relative;
+}
+.timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 28px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border2);
+}
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+}
+.timeline-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg3);
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
+}
+.timeline-role { font-size: 15px; font-weight: 600; color: var(--fg); }
+.timeline-co { font-size: 13px; color: var(--accent2); margin-top: 2px; }
+.timeline-note { font-size: 13px; color: var(--fg2); margin-top: 4px; line-height: 1.5; }
+
+/* ── CONTACT ── */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.contact-left {}
+.contact-headline {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.contact-sub {
+  font-size: 16px;
+  color: var(--fg2);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 380px;
+}
+.contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.contact-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 16px 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--bg1);
+  border: 1px solid var(--border2);
   border-radius: 8px;
   text-decoration: none;
   color: var(--fg);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
-.contact-link:hover { border-color: var(--accent); }
-.contact-link-icon {
-  font-size: 18px;
-  width: 32px;
-  text-align: center;
+.contact-item:hover { border-color: var(--accent); background: var(--bg2); }
+.ci-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
 }
-.contact-link-text { min-width: 0; }
-.contact-link-label {
+.ci-meta { min-width: 0; flex: 1; }
+.ci-label {
   font-size: 11px;
-  color: var(--fg2);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg3);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-family: 'JetBrains Mono', monospace;
 }
-.contact-link-value {
+.ci-value {
   font-size: 14px;
+  font-weight: 500;
   color: var(--fg);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.contact-copy {
+.ci-arrow { color: var(--fg3); font-size: 14px; flex-shrink: 0; }
+.contact-copy-btn {
   background: none;
   border: none;
-  color: var(--fg2);
+  color: var(--fg3);
   cursor: pointer;
-  font-size: 14px;
-  margin-left: auto;
+  font-size: 15px;
   padding: 4px;
   transition: color 0.2s;
   flex-shrink: 0;
 }
-.contact-copy:hover { color: var(--accent2); }
-
-.availability-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 28px;
+.contact-copy-btn:hover { color: var(--accent2); }
+.avail-card {
+  background: var(--bg1);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 32px;
+}
+.avail-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.avail-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  background: rgba(85,239,196,0.08);
+  border: 1px solid rgba(85,239,196,0.18);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
 }
 .avail-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #4ade80;
-  margin-right: 8px;
-  animation: pulse 2s infinite;
+  background: var(--green);
+  animation: pulse 2.5s infinite;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-.avail-status {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4ade80;
-  margin-bottom: 12px;
+.avail-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
 }
 .avail-desc {
   font-size: 14px;
   color: var(--fg2);
-  line-height: 1.6;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.avail-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.avail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.avail-row-label { color: var(--fg3); }
+.avail-row-val { color: var(--fg); font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border2);
+  padding: 24px max(32px, env(safe-area-inset-left, 0px));
+}
+.footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-left {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--fg3);
+}
+.footer-right {
+  display: flex;
+  gap: 24px;
+}
+.footer-link {
+  font-size: 12px;
+  color: var(--fg3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--accent2); }
+
+/* DIVIDER */
+hr.div {
+  border: none;
+  border-top: 1px solid var(--border2);
+  margin: 0;
 }
 
-/* FOOTER */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 24px max(24px, env(safe-area-inset-left, 0px));
-  text-align: center;
-  font-size: 13px;
-  color: var(--fg2);
-  font-family: 'JetBrains Mono', monospace;
+/* FADE IN */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* RESPONSIVE */
-@media (max-width: 700px) {
-  .nav-links { display: none; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .hero-stats { gap: 32px; }
+@media (max-width: 768px) {
+  .nav-links li:not(:last-child) { display: none; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-avatar { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .project-row { grid-template-columns: 1fr; }
+  .proj-right { align-items: flex-start; padding-top: 0; flex-direction: row; flex-wrap: wrap; }
+  .bento { grid-template-columns: repeat(6, 1fr); }
+  .b-8-2, .bento-hero-cell { grid-column: span 6; }
+  .bento-stack-cell { grid-column: span 6; grid-row: span 1; }
+  .b-4-2, .b-4-1, .b-3-1, .b-3-2, .b-6-1, .b-6-2 { grid-column: span 3; }
+}
+@media (max-width: 480px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .b-8-2, .bento-hero-cell, .bento-stack-cell,
+  .b-4-2, .b-4-1, .b-3-1, .b-3-2, .b-6-1, .b-6-2 { grid-column: span 2; grid-row: span 1; }
+  .hero-stats { gap: 24px; }
 }
 </style>
 
-<nav>
+<div id="glow"></div>
+
+<nav id="nav">
   <div class="nav-inner">
-    <span class="nav-logo">eugene@juma:~$</span>
+    <span class="nav-logo">ej<span>@senior-android</span></span>
     <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact" class="nav-cta">get in touch</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
-  <p class="hero-eyebrow">Senior Android Engineer</p>
-  <h1 class="hero-name">Eugene<br><span>Juma.</span></h1>
-  <p class="hero-role">Building Android apps used by real people, at scale.</p>
-  <div class="hero-cta">
-    <a href="#projects" class="btn btn-primary">View Projects</a>
-    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-  </div>
-  <div class="hero-stats">
-    <div>
-      <div class="stat-num">7+</div>
-      <div class="stat-label">Years Experience</div>
-    </div>
-    <div>
-      <div class="stat-num">50K+</div>
-      <div class="stat-label">Active Users</div>
-    </div>
-    <div>
-      <div class="stat-num">3</div>
-      <div class="stat-label">Apps Shipped</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section id="projects">
-  <p class="section-label">Work</p>
-  <h2 class="section-title">Shipped Projects</h2>
-
-  <div class="projects-grid">
-
-    <!-- Waliin -->
-    <div class="project-card">
-      <div class="project-video" id="waliin-video">
-        <div class="video-placeholder">
-          <div class="play-icon">▶</div>
-          <p>// demo video coming soon</p>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          open to senior android roles
         </div>
-      </div>
-      <div class="project-body">
-        <div class="project-tags">
-          <span class="tag">Kotlin</span>
-          <span class="tag">Jetpack Compose</span>
-          <span class="tag">WebRTC</span>
-          <span class="tag">Firebase</span>
-          <span class="tag">MediaSoup</span>
+        <h1 class="hero-name">Eugene Juma</h1>
+        <div class="hero-name-sub">Senior Android Engineer</div>
+        <p class="hero-desc">
+          7+ years architecting and shipping production grade Android experiences for platforms serving millions of users across social, edtech, fintech and e-commerce.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-fill">View My Work</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
         </div>
-        <h3 class="project-name">Waliin</h3>
-        <p class="project-desc">Social platform rebuilt from the ground up as the sole Android engineer. Features live streaming, real-time gifting, an edtech arm with live classes and student billing, and a native video pipeline migrated from Agora to MediaSoup.</p>
-        <div class="project-meta">
-          <div class="meta-item">
-            <span class="meta-label">Users</span>
-            <span class="meta-value">50,000+</span>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">7+</span>
+            <span class="stat-label">Years exp.</span>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Platform</span>
-            <span class="meta-value">Android</span>
+          <div class="stat">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">Completed projects</span>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Status</span>
-            <span class="meta-value">Live</span>
+          <div class="stat">
+            <span class="stat-num">99%</span>
+            <span class="stat-label">Crash-free users</span>
           </div>
         </div>
-        <div class="project-links">
-          <a href="https://play.google.com/store/apps/details?id=com.waliin" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:8px 16px;">Play Store ↗</a>
-        </div>
       </div>
-    </div>
-
-    <!-- Tea'd -->
-    <div class="project-card">
-      <div class="project-video" id="tead-video">
-        <div class="video-placeholder">
-          <div class="play-icon">▶</div>
-          <p>// demo video coming soon</p>
-        </div>
-      </div>
-      <div class="project-body">
-        <div class="project-tags">
-          <span class="tag">Kotlin</span>
-          <span class="tag">MVVM</span>
-          <span class="tag">Firebase</span>
-          <span class="tag">Retrofit</span>
-        </div>
-        <h3 class="project-name">Tea'd</h3>
-        <p class="project-desc">Live on Google Play. Built and shipped independently, demonstrating end-to-end ownership from architecture through Play Store deployment.</p>
-        <div class="project-meta">
-          <div class="meta-item">
-            <span class="meta-label">Platform</span>
-            <span class="meta-value">Android</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Status</span>
-            <span class="meta-value">Live</span>
-          </div>
-        </div>
-        <div class="project-links">
-          <a href="https://play.google.com/store/apps/details?id=com.spillthetea.tead" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:8px 16px;">Play Store ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Calorica -->
-    <div class="project-card">
-      <div class="project-video" id="calorica-video">
-        <div class="video-placeholder">
-          <div class="play-icon">▶</div>
-          <p>// demo video coming soon</p>
-        </div>
-      </div>
-      <div class="project-body">
-        <div class="project-tags">
-          <span class="tag">Swift</span>
-          <span class="tag">SwiftUI</span>
-          <span class="tag">iOS</span>
-        </div>
-        <h3 class="project-name">Calorica</h3>
-        <p class="project-desc">iOS calorie tracking app built in Swift and SwiftUI, live on the App Store. Demonstrates cross-platform capability beyond Android.</p>
-        <div class="project-meta">
-          <div class="meta-item">
-            <span class="meta-label">Platform</span>
-            <span class="meta-value">iOS</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Status</span>
-            <span class="meta-value">Live</span>
-          </div>
-        </div>
-        <div class="project-links">
-          <a href="https://apps.apple.com" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:8px 16px;">App Store ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- My Diary -->
-    <div class="project-card">
-      <div class="project-video" id="diary-video">
-        <div class="video-placeholder">
-          <div class="play-icon">▶</div>
-          <p>// demo video coming soon</p>
-        </div>
-      </div>
-      <div class="project-body">
-        <div class="project-tags">
-          <span class="tag">Kotlin</span>
-          <span class="tag">Jetpack Compose</span>
-          <span class="tag">Firebase</span>
-          <span class="tag">Room</span>
-        </div>
-        <h3 class="project-name">My Diary</h3>
-        <p class="project-desc">Personal journaling app with 444 commits — a fully-featured open source project showcasing Kotlin, Jetpack Compose, Firebase auth, and local persistence with Room.</p>
-        <div class="project-meta">
-          <div class="meta-item">
-            <span class="meta-label">Commits</span>
-            <span class="meta-value">444</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Type</span>
-            <span class="meta-value">Open Source</span>
-          </div>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/EUGENE2333/My-Diary" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:8px 16px;">GitHub ↗</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section id="skills">
-  <p class="section-label">Stack</p>
-  <h2 class="section-title">Skills & Tools</h2>
-
-  <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-title">Android Core</div>
-      <div class="skill-list">
-        <div class="skill-item"><span class="skill-name">Kotlin</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:98%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Jetpack Compose</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Android SDK</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:97%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">MVVM / Clean Arch</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Coroutines / Flow</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:93%"></div></div></div>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Data & Backend</div>
-      <div class="skill-list">
-        <div class="skill-item"><span class="skill-name">Firebase / Firestore</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Retrofit / REST</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:93%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Room</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">AWS S3</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Hilt / Dagger</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div></div>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Real-time & Media</div>
-      <div class="skill-list">
-        <div class="skill-item"><span class="skill-name">WebRTC</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">MediaSoup</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">ExoPlayer</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">WebSockets</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div></div>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Cross-platform & Tools</div>
-      <div class="skill-list">
-        <div class="skill-item"><span class="skill-name">Swift / SwiftUI</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:72%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Java</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">GitHub Actions</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Play Console</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div></div>
-        <div class="skill-item"><span class="skill-name">Git / Gradle</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+      <div class="hero-avatar">
+        <span class="avatar-initials">EJ</span>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="div">
 
-<section id="contact">
-  <p class="section-label">Contact</p>
-  <h2 class="section-title">Open to Remote Roles</h2>
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span>Selected Work</span>
+    </div>
+    <h2 class="section-h fade-in">Check Out Some of My Works</h2>
 
-  <div class="contact-grid">
-    <div>
-      <p class="contact-intro">Senior Android Engineer based in Nairobi, open to remote Senior / Staff roles worldwide. 7+ years building production apps at scale.</p>
-      <div class="contact-links">
-        <div class="contact-link">
-          <span class="contact-link-icon">✉</span>
-          <div class="contact-link-text">
-            <div class="contact-link-label">Email</div>
-            <div class="contact-link-value">eugylumbasi@gmail.com</div>
-          </div>
-          <button class="contact-copy" onclick="copyText('eugylumbasi@gmail.com', this)" title="Copy">⎘</button>
+    <div class="projects-grid fade-in">
+
+      <!-- Calorica -->
+      <div class="proj-card-wrap">
+        <div class="proj-card-overlay">
+          <div class="proj-card-platform">iOS · Health</div>
+          <div class="proj-card-name">Calorica</div>
         </div>
-        <a href="https://linkedin.com/in/eugene-j-b8738119b" target="_blank" class="contact-link">
-          <span class="contact-link-icon">in</span>
-          <div class="contact-link-text">
-            <div class="contact-link-label">LinkedIn</div>
-            <div class="contact-link-value">linkedin.com/in/eugene-j-b8738119b</div>
+        <div class="proj-card" style="background:linear-gradient(160deg,#051a0e 0%,#082e18 50%,#00a878 100%);" onclick="openModal('calorica')">
+          <div class="proj-card-phone-wrap">
+            <!-- Replace: <img class="proj-card-phone-img" src="calorica-screenshot.png" alt="Calorica"> -->
+            <div class="proj-card-phone-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1"/></svg>
+              CALORICA.PNG
+            </div>
           </div>
-        </a>
-        <a href="https://github.com/EUGENE2333" target="_blank" class="contact-link">
-          <span class="contact-link-icon">⌥</span>
-          <div class="contact-link-text">
-            <div class="contact-link-label">GitHub</div>
-            <div class="contact-link-value">github.com/EUGENE2333</div>
-          </div>
-        </a>
+          <span class="proj-card-thumb-badge">LIVE</span>
+        </div>
       </div>
+
+      <!-- Tea'd -->
+      <div class="proj-card-wrap">
+        <div class="proj-card-overlay">
+          <div class="proj-card-platform">Android · Social</div>
+          <div class="proj-card-name">Tea'd</div>
+        </div>
+        <div class="proj-card" style="background:linear-gradient(160deg,#0e0718 0%,#1a0d30 50%,#5e3db8 100%);" onclick="openModal('tead')">
+          <div class="proj-card-phone-wrap">
+            <!-- Replace: <img class="proj-card-phone-img" src="tead-screenshot.png" alt="Tea'd"> -->
+            <div class="proj-card-phone-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1"/></svg>
+              TEAD.PNG
+            </div>
+          </div>
+          <span class="proj-card-thumb-badge">LIVE</span>
+        </div>
+      </div>
+
+      <!-- Waliin Learn -->
+      <div class="proj-card-wrap">
+        <div class="proj-card-overlay">
+          <div class="proj-card-platform">Android · EdTech</div>
+          <div class="proj-card-name">Waliin Learn</div>
+        </div>
+        <div class="proj-card" style="background:linear-gradient(160deg,#061428 0%,#0a2040 50%,#0566b8 100%);" onclick="openModal('waliinlearn')">
+          <div class="proj-card-phone-wrap">
+            <!-- Replace: <img class="proj-card-phone-img" src="waliinlearn-screenshot.png" alt="Waliin Learn"> -->
+            <div class="proj-card-phone-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1"/></svg>
+              WALIINLEARN.PNG
+            </div>
+          </div>
+          <span class="proj-card-thumb-badge">LIVE</span>
+        </div>
+      </div>
+
+      <!-- Samani Furniture -->
+      <div class="proj-card-wrap">
+        <div class="proj-card-overlay">
+          <div class="proj-card-platform">Android · E-Commerce</div>
+          <div class="proj-card-name">Samani Furniture</div>
+        </div>
+        <div class="proj-card" style="background:linear-gradient(160deg,#1a1008 0%,#2e2010 50%,#b87333 100%);" onclick="openModal('samani')">
+          <div class="proj-card-phone-wrap">
+            <!-- Replace: <img class="proj-card-phone-img" src="samani-screenshot.png" alt="Samani Furniture"> -->
+            <div class="proj-card-phone-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1"/></svg>
+              SAMANI.PNG
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Diary -->
+      <div class="proj-card-wrap">
+        <div class="proj-card-overlay">
+          <div class="proj-card-platform">Android · Open Source</div>
+          <div class="proj-card-name">My Diary</div>
+        </div>
+        <div class="proj-card" style="background:linear-gradient(160deg,#1a0c06 0%,#2e1608 50%,#d35400 100%);" onclick="openModal('mydiary')">
+          <div class="proj-card-phone-wrap">
+            <!-- Replace: <img class="proj-card-phone-img" src="diary-screenshot.png" alt="My Diary"> -->
+            <div class="proj-card-phone-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1"/></svg>
+              DIARY.PNG
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="availability-card">
-      <div class="avail-status"><span class="avail-dot"></span>Available for hire</div>
-      <p class="avail-desc">Looking for Senior Android Engineer roles — remote, full-time. Open to relocating to the UK. Comfortable owning the entire Android codebase independently or leading within a team.</p>
+    <!-- MODALS -->
+    <div class="proj-modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+      <div class="proj-modal" id="proj-modal">
+        <button class="proj-modal-close" onclick="closeModalBtn()">✕</button>
+        <div class="proj-modal-header" id="modal-thumb">
+          <div class="proj-modal-header-stripe"></div>
+          <span id="modal-initial"></span>
+        </div>
+        <div class="proj-modal-content">
+          <div class="proj-modal-platform" id="modal-platform"></div>
+          <div class="proj-modal-name" id="modal-name"></div>
+          <p class="proj-modal-desc" id="modal-desc"></p>
+          <div class="proj-modal-tags" id="modal-tags"></div>
+          <div class="proj-modal-actions" id="modal-actions"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- SKILLS BENTO -->
+<section id="skills" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span>Stack</span>
+    </div>
+    <h2 class="section-h fade-in">Skills &amp; tools</h2>
+
+    <div class="bento fade-in">
+
+      <div class="bento-cell bento-hero-cell">
+        <div>
+          <div class="bento-hero-big">Senior Android.<br>Platform-aware.</div>
+          <div class="bento-hero-sub">Kotlin · Jetpack · Clean Architecture · WebRTC</div>
+        </div>
+      </div>
+
+      <div class="bento-cell b-4-2 bento-stack-cell">
+        <div class="bento-label">Core Android</div>
+        <div class="stack-list">
+          <span class="stack-chip">Kotlin</span>
+          <span class="stack-chip">Jetpack Compose</span>
+          <span class="stack-chip">Android SDK</span>
+          <span class="stack-chip">MVVM</span>
+          <span class="stack-chip">Clean Arch</span>
+          <span class="stack-chip">Coroutines</span>
+          <span class="stack-chip">Flow</span>
+        </div>
+      </div>
+
+      <div class="bento-cell b-3-1">
+        <div class="bento-label">Experience</div>
+        <div class="bento-value accent">7+ years</div>
+      </div>
+
+      <div class="bento-cell b-3-1">
+        <div class="bento-label">Location</div>
+        <div class="bento-value mono">Nairobi, KE</div>
+      </div>
+
+      <div class="bento-cell b-3-1">
+        <div class="bento-label">DI</div>
+        <div class="bento-value mono">Hilt · Dagger</div>
+      </div>
+
+      <div class="bento-cell b-3-1">
+        <div class="bento-label">Networking</div>
+        <div class="bento-value mono">Retrofit · REST</div>
+      </div>
+
+      <div class="bento-cell b-6-2">
+        <div class="bento-label">Data &amp; Storage</div>
+        <div class="stack-list" style="margin-top:8px">
+          <span class="stack-chip">Firebase</span>
+          <span class="stack-chip">Firestore</span>
+          <span class="stack-chip">Room</span>
+          <span class="stack-chip">AWS S3</span>
+          <span class="stack-chip">DataStore</span>
+        </div>
+      </div>
+
+      <div class="bento-cell b-3-2">
+        <div class="bento-label">Real-time &amp; Media</div>
+        <div class="stack-list" style="margin-top:8px">
+          <span class="stack-chip">WebRTC</span>
+          <span class="stack-chip">MediaSoup</span>
+          <span class="stack-chip">ExoPlayer</span>
+          <span class="stack-chip">WebSockets</span>
+        </div>
+      </div>
+
+      <div class="bento-cell b-3-2">
+        <div class="bento-label">Cross-platform</div>
+        <div class="stack-list" style="margin-top:8px">
+          <span class="stack-chip">Swift</span>
+          <span class="stack-chip">SwiftUI</span>
+          <span class="stack-chip">Java</span>
+        </div>
+      </div>
+
+      <div class="bento-cell b-4-1">
+        <div class="bento-label">CI/CD &amp; Release</div>
+        <div class="bento-value mono" style="font-size:12px">GitHub Actions · Play Console</div>
+      </div>
+
+      <div class="bento-cell b-4-1">
+        <div class="bento-label">Design System</div>
+        <div class="bento-value mono" style="font-size:12px">Material You · Compose Layouts</div>
+      </div>
+
+      <div class="bento-cell b-4-1">
+        <div class="bento-label">Processes</div>
+        <div class="bento-value mono" style="font-size:12px">Agile · Code Review · System Design</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-wrap fade-in">
+      <div class="contact-left">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span>Contact</span>
+        </div>
+        <h2 class="contact-headline">Let's work<br>together.</h2>
+        <p class="contact-sub">
+          Looking for senior Android roles, remote or UK based.
+          Open to staff level positions. Fast reply, no middlemen.
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="ci-icon">✉</div>
+            <div class="ci-meta">
+              <div class="ci-label">Email</div>
+              <div class="ci-value">eugylumbasi@gmail.com</div>
+            </div>
+            <button class="contact-copy-btn" onclick="copyText('eugylumbasi@gmail.com',this)" title="Copy">⎘</button>
+          </div>
+          <a href="https://linkedin.com/in/eugene-j-b8738119b" target="_blank" class="contact-item">
+            <div class="ci-icon" style="font-size:13px;font-weight:800;font-family:'Inter',sans-serif;">in</div>
+            <div class="ci-meta">
+              <div class="ci-label">LinkedIn</div>
+              <div class="ci-value">linkedin.com/in/eugene-j-b8738119b</div>
+            </div>
+            <span class="ci-arrow">↗</span>
+          </a>
+          <a href="https://github.com/EUGENE2333" target="_blank" class="contact-item">
+            <div class="ci-icon" style="font-size:18px;">⌥</div>
+            <div class="ci-meta">
+              <div class="ci-label">GitHub</div>
+              <div class="ci-value">github.com/EUGENE2333</div>
+            </div>
+            <span class="ci-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="avail-card">
+        <div class="avail-top">
+          <div class="avail-pill">
+            <span class="avail-dot"></span>
+            Available now
+          </div>
+        </div>
+        <div class="avail-title">Ready for the right role</div>
+        <p class="avail-desc">
+          7+ years of production Android experience. I can own the entire Android codebase
+          or lead within an existing team. Comfortable with ambiguity, fast ramp-up, and shipping.
+        </p>
+        <div class="avail-detail">
+          <div class="avail-row">
+            <span class="avail-row-label">Role type</span>
+            <span class="avail-row-val">Senior or Staff Android</span>
+          </div>
+          <div class="avail-row">
+            <span class="avail-row-label">Arrangement</span>
+            <span class="avail-row-val">Remote or UK relocation</span>
+          </div>
+          <div class="avail-row">
+            <span class="avail-row-label">Notice</span>
+            <span class="avail-row-val">Available immediately</span>
+          </div>
+          <div class="avail-row">
+            <span class="avail-row-label">Time zone</span>
+            <span class="avail-row-val">EAT (UTC+3)</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Eugene Juma · Built with intent · Nairobi, Kenya</span>
+  <div class="footer-inner">
+    <span class="footer-left">© 2026 Eugene Juma, Nairobi, Kenya</span>
+    <div class="footer-right">
+      <a href="https://github.com/EUGENE2333" target="_blank" class="footer-link">GitHub</a>
+      <a href="https://linkedin.com/in/eugene-j-b8738119b" target="_blank" class="footer-link">LinkedIn</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-function copyText(text, btn) {
-  try {
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = '✓';
-      setTimeout(() => btn.textContent = '⎘', 2000);
-    }).catch(() => fallbackCopy(text, btn));
-  } catch(e) {
-    fallbackCopy(text, btn);
-  }
-}
-function fallbackCopy(text, btn) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.position = 'fixed';
-  ta.style.opacity = '0';
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand('copy'); btn.textContent = '✓'; setTimeout(() => btn.textContent = '⎘', 2000); } catch(e) {}
-  document.body.removeChild(ta);
-}
+// Cursor glow
+const glow = document.getElementById('glow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+});
 
-// When you have a YouTube video ID, call:
-// embedVideo('waliin-video', 'YOUR_YOUTUBE_ID')
-function embedVideo(containerId, youtubeId) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + youtubeId + '?rel=0" allowfullscreen></iframe>';
+// Nav scroll state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => obs.observe(s));
+
+// Fade in on scroll
+const fadeEls = document.querySelectorAll('.fade-in');
+const fadeObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => fadeObs.observe(el));
+
+// Project modal data
+const projects = {
+  waliin: {
+    name: 'Waliin',
+    platform: 'Android · Live Streaming',
+    initial: 'W',
+    bg: 'linear-gradient(135deg, #0d1b2e 0%, #1a3050 100%)',
+    color: '#74b9ff',
+    desc: 'Social platform combining live streaming with an edtech arm — live classes, student billing, real-time gifting. Led the full Android rebuild from scratch: migrated the video pipeline from Agora to native WebRTC/MediaSoup, ported the entire UI to Jetpack Compose, and shipped through Play Store to 50,000+ active users.',
+    tags: ['Kotlin','Jetpack Compose','WebRTC','MediaSoup','Firebase','Coroutines','Hilt'],
+    links: [{ label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.waliin', type: 'primary' }]
+  },
+  tead: {
+    name: "Tea'd",
+    platform: 'Android · Social',
+    initial: 'T',
+    bg: 'linear-gradient(135deg, #1a0d2e 0%, #2d1a50 100%)',
+    color: '#a29bfe',
+    desc: "Designed, architected, and shipped entirely by me — from zero to Play Store. End-to-end ownership of product decisions, UI design, backend integration, and release management. A demonstration of the full mobile product development lifecycle.",
+    tags: ['Kotlin','MVVM','Clean Architecture','Firebase','Retrofit'],
+    links: [{ label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.spillthetea.tead', type: 'primary' }]
+  },
+  calorica: {
+    name: 'Calorica',
+    platform: 'iOS · Health',
+    initial: 'C',
+    bg: 'linear-gradient(135deg, #0d2e1a 0%, #1a5030 100%)',
+    color: '#55efc4',
+    desc: 'Calorie tracking app built in Swift and SwiftUI, live on the App Store. A deliberate step beyond Android — proves platform-agnostic engineering capability and an understanding of iOS-specific UX patterns.',
+    tags: ['Swift','SwiftUI','iOS','HealthKit'],
+    links: [{ label: 'App Store ↗', url: 'https://apps.apple.com', type: 'primary' }]
+  },
+  mydiary: {
+    name: 'My Diary',
+    platform: 'Android · Open Source',
+    initial: 'MD',
+    bg: 'linear-gradient(135deg, #2e1a0d 0%, #503010 100%)',
+    color: '#fdcb6e',
+    desc: 'Open source journaling app — full-featured, with Jetpack Compose UI, Firebase authentication, and Room for local persistence. The commit history and architecture show how I approach long-form Android projects: structured, tested, clean.',
+    tags: ['Kotlin','Jetpack Compose','Firebase','Room','Coroutines'],
+    links: [{ label: 'GitHub ↗', url: 'https://github.com/EUGENE2333/My-Diary', type: 'primary' }]
+  }
+};
+
+function openModal(id) {
+  const p = projects[id];
+  if (!p) return;
+  document.getElementById('modal-thumb').style.background = p.bg;
+  document.getElementById('modal-initial').style.color = p.color;
+  document.getElementById('modal-initial').textContent = p.initial;
+  document.getElementById('modal-platform').textContent = p.platform;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-desc').textContent = p.desc;
+  document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span class="proj-modal-tag">${t}</span>`).join('');
+  document.getElementById('modal-actions').innerHTML = p.links.map(l =>
+    `<a href="${l.url}" target="_blank" class="proj-modal-link ${l.type}">${l.label}</a>`
+  ).join('');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+// Copy email
+function copyText(text, btn) {
+  const orig = btn.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); btn.textContent = '✓'; btn.style.color = 'var(--green)'; setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000); } catch {}
+    document.body.removeChild(ta);
+  });
 }
 </script>
