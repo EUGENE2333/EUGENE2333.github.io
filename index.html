@@ -388,13 +388,12 @@ body::before {
   filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45));
 }
 .proj-card-phone-video {
-  width: auto;
-  height: 92%;
-  max-width: 90%;
+  width: 100%;
+  height: 100%;
   flex-shrink: 0;
-  border-radius: 28px;
+  border-radius: 0;
   object-fit: cover;
-  filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45));
+  display: block;
 }
 /* Placeholder shown while no real asset is set */
 .proj-card-phone-placeholder {
@@ -485,31 +484,22 @@ body::before {
 }
 .proj-modal-header {
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 9/16;
   background: var(--bg3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 72px;
-  font-weight: 900;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: -0.06em;
-  opacity: 0.15;
   border-radius: 18px 18px 0 0;
   overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.proj-modal-header-stripe {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 16px,
-    rgba(255,255,255,0.025) 16px,
-    rgba(255,255,255,0.025) 32px
-  );
+.proj-modal-header video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
+.proj-modal-header-stripe { display: none; }
 .proj-modal-content {
   padding: 28px 32px 32px;
 }
@@ -1029,10 +1019,10 @@ hr.div {
       <!-- Calorica -->
       <div class="proj-card-wrap">
         <div class="proj-card-overlay">
-          <div class="proj-card-platform">iOS · Health</div>
+          <div class="proj-card-platform">Android · Health</div>
           <div class="proj-card-name">Calorica</div>
         </div>
-        <div class="proj-card" style="background:linear-gradient(160deg,#051a0e 0%,#082e18 50%,#00a878 100%);" onclick="openModal('calorica')">
+        <div class="proj-card" style="background:var(--bg2);" onclick="openModal('calorica')">
           <div class="proj-card-phone-wrap">
             <video class="proj-card-phone-video" src="https://raw.githubusercontent.com/EUGENE2333/EUGENE2333.github.io/main/calorica.mp4" autoplay loop muted playsinline></video>
           </div>
@@ -1046,7 +1036,7 @@ hr.div {
           <div class="proj-card-platform">Android · Social</div>
           <div class="proj-card-name">Tea'd</div>
         </div>
-        <div class="proj-card" style="background:linear-gradient(160deg,#0e0718 0%,#1a0d30 50%,#5e3db8 100%);" onclick="openModal('tead')">
+        <div class="proj-card" style="background:var(--bg2);" onclick="openModal('tead')">
           <div class="proj-card-phone-wrap">
             <video class="proj-card-phone-video" src="https://raw.githubusercontent.com/EUGENE2333/EUGENE2333.github.io/main/tead.mp4" autoplay loop muted playsinline></video>
           </div>
@@ -1060,7 +1050,7 @@ hr.div {
           <div class="proj-card-platform">Android · EdTech</div>
           <div class="proj-card-name">Waliin Learn</div>
         </div>
-        <div class="proj-card" style="background:linear-gradient(160deg,#061428 0%,#0a2040 50%,#0566b8 100%);" onclick="openModal('waliinlearn')">
+        <div class="proj-card" style="background:var(--bg2);" onclick="openModal('waliinlearn')">
           <div class="proj-card-phone-wrap">
             <video class="proj-card-phone-video" src="https://raw.githubusercontent.com/EUGENE2333/EUGENE2333.github.io/main/waliinlearn%20(1).mp4" autoplay loop muted playsinline></video>
           </div>
@@ -1074,7 +1064,7 @@ hr.div {
           <div class="proj-card-platform">Android · E-Commerce</div>
           <div class="proj-card-name">Samani Furniture</div>
         </div>
-        <div class="proj-card" style="background:linear-gradient(160deg,#1a1008 0%,#2e2010 50%,#b87333 100%);" onclick="openModal('samani')">
+        <div class="proj-card" style="background:var(--bg2);" onclick="openModal('samani')">
           <div class="proj-card-phone-wrap">
             <video class="proj-card-phone-video" src="https://raw.githubusercontent.com/EUGENE2333/EUGENE2333.github.io/main/283108405-9bbf9fa7-075a-4126-b009-847af25a3074.mp4" autoplay loop muted playsinline></video>
           </div>
@@ -1087,7 +1077,7 @@ hr.div {
           <div class="proj-card-platform">Android · Open Source</div>
           <div class="proj-card-name">My Diary</div>
         </div>
-        <div class="proj-card" style="background:linear-gradient(160deg,#1a0c06 0%,#2e1608 50%,#d35400 100%);" onclick="openModal('mydiary')">
+        <div class="proj-card" style="background:var(--bg2);" onclick="openModal('mydiary')">
           <div class="proj-card-phone-wrap">
             <video class="proj-card-phone-video" src="https://raw.githubusercontent.com/EUGENE2333/EUGENE2333.github.io/main/WhatsApp%20Video%202026-10-21%20at%2015.16.01.mp4" autoplay loop muted playsinline></video>
           </div>
@@ -1102,7 +1092,7 @@ hr.div {
         <button class="proj-modal-close" onclick="closeModalBtn()">✕</button>
         <div class="proj-modal-header" id="modal-thumb">
           <div class="proj-modal-header-stripe"></div>
-          <span id="modal-initial"></span>
+          <video id="modal-video" autoplay loop muted playsinline></video>
         </div>
         <div class="proj-modal-content">
           <div class="proj-modal-platform" id="modal-platform"></div>
@@ -1341,13 +1331,12 @@ const fadeObs = new IntersectionObserver(entries => {
 fadeEls.forEach(el => fadeObs.observe(el));
 
 // Project modal data
+const BASE = 'https://raw.githubusercontent.com/EUGENE2333/EUGENE2333.github.io/main/';
 const projects = {
   waliin: {
     name: 'Waliin',
     platform: 'Android · Live Streaming',
-    initial: 'W',
-    bg: 'linear-gradient(135deg, #0d1b2e 0%, #1a3050 100%)',
-    color: '#74b9ff',
+    video: null,
     desc: 'Social platform combining live streaming with an edtech arm — live classes, student billing, real-time gifting. Led the full Android rebuild from scratch: migrated the video pipeline from Agora to native WebRTC/MediaSoup, ported the entire UI to Jetpack Compose, and shipped through Play Store to 50,000+ active users.',
     tags: ['Kotlin','Jetpack Compose','WebRTC','MediaSoup','Firebase','Coroutines','Hilt'],
     links: [{ label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.waliin', type: 'primary' }]
@@ -1355,41 +1344,59 @@ const projects = {
   tead: {
     name: "Tea'd",
     platform: 'Android · Social',
-    initial: 'T',
-    bg: 'linear-gradient(135deg, #1a0d2e 0%, #2d1a50 100%)',
-    color: '#a29bfe',
+    video: BASE + 'tead.mp4',
     desc: "Designed, architected, and shipped entirely by me — from zero to Play Store. End-to-end ownership of product decisions, UI design, backend integration, and release management. A demonstration of the full mobile product development lifecycle.",
     tags: ['Kotlin','MVVM','Clean Architecture','Firebase','Retrofit'],
     links: [{ label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.spillthetea.tead', type: 'primary' }]
   },
   calorica: {
     name: 'Calorica',
-    platform: 'iOS · Health',
-    initial: 'C',
-    bg: 'linear-gradient(135deg, #0d2e1a 0%, #1a5030 100%)',
-    color: '#55efc4',
-    desc: 'Calorie tracking app built in Swift and SwiftUI, live on the App Store. A deliberate step beyond Android — proves platform-agnostic engineering capability and an understanding of iOS-specific UX patterns.',
-    tags: ['Swift','SwiftUI','iOS','HealthKit'],
-    links: [{ label: 'App Store ↗', url: 'https://apps.apple.com', type: 'primary' }]
+    platform: 'Android · Health',
+    video: BASE + 'calorica.mp4',
+    desc: 'Calorie tracking app built for Android, live on Google Play. Tracks daily calories, macros, and meal logs with a clean, intuitive UI built in Kotlin and Jetpack Compose.',
+    tags: ['Kotlin','Jetpack Compose','Android','Room','Firebase'],
+    links: [{ label: 'Try on Android ↗', url: 'https://play.google.com/apps/testing/com.calorica.caloricaapp', type: 'primary' }]
   },
   mydiary: {
     name: 'My Diary',
     platform: 'Android · Open Source',
-    initial: 'MD',
-    bg: 'linear-gradient(135deg, #2e1a0d 0%, #503010 100%)',
-    color: '#fdcb6e',
+    video: BASE + 'WhatsApp%20Video%202026-10-21%20at%2015.16.01.mp4',
     desc: 'Open source journaling app — full-featured, with Jetpack Compose UI, Firebase authentication, and Room for local persistence. The commit history and architecture show how I approach long-form Android projects: structured, tested, clean.',
     tags: ['Kotlin','Jetpack Compose','Firebase','Room','Coroutines'],
     links: [{ label: 'GitHub ↗', url: 'https://github.com/EUGENE2333/My-Diary', type: 'primary' }]
+  },
+  samani: {
+    name: 'Samani Furniture',
+    platform: 'Android · E-Commerce',
+    video: BASE + '283108405-9bbf9fa7-075a-4126-b009-847af25a3074.mp4',
+    desc: 'E-commerce Android app for a furniture brand. Full product catalogue, cart, and checkout flow built with Kotlin and Jetpack Compose.',
+    tags: ['Kotlin','Jetpack Compose','Retrofit','Room'],
+    links: [{ label: 'GitHub ↗', url: 'https://github.com/EUGENE2333/Samani-Furniture-eCommerce-App', type: 'primary' }]
+  },
+  waliinlearn: {
+    name: 'Waliin Learn',
+    platform: 'Android · EdTech',
+    video: BASE + 'waliinlearn%20(1).mp4',
+    desc: 'EdTech arm of the Waliin platform — live classes, student billing, subscriptions, and enrollment flows. Built as part of the broader Waliin Android rebuild.',
+    tags: ['Kotlin','Jetpack Compose','Stripe','Firebase','Coroutines'],
+    links: [{ label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.waliin&hl=en', type: 'primary' }]
   }
 };
 
 function openModal(id) {
   const p = projects[id];
   if (!p) return;
-  document.getElementById('modal-thumb').style.background = p.bg;
-  document.getElementById('modal-initial').style.color = p.color;
-  document.getElementById('modal-initial').textContent = p.initial;
+  const vid = document.getElementById('modal-video');
+  document.getElementById('modal-thumb').style.background = 'var(--bg3)';
+  if (p.video) {
+    vid.src = p.video;
+    vid.style.display = 'block';
+    vid.load();
+    vid.play().catch(() => {});
+  } else {
+    vid.src = '';
+    vid.style.display = 'none';
+  }
   document.getElementById('modal-platform').textContent = p.platform;
   document.getElementById('modal-name').textContent = p.name;
   document.getElementById('modal-desc').textContent = p.desc;
@@ -1406,6 +1413,9 @@ function closeModal(e) {
 function closeModalBtn() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  const vid = document.getElementById('modal-video');
+  vid.pause();
+  vid.src = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
