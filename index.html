@@ -343,7 +343,7 @@ body::before {
 /* ── PROJECTS GRID ── */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px 20px;
   row-gap: 48px;
 }
@@ -569,6 +569,7 @@ body::before {
 
 @media (max-width: 768px) {
   .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .proj-card { aspect-ratio: 9/16; }
 }
 @media (max-width: 480px) {
   .projects-grid { grid-template-columns: 1fr; }
