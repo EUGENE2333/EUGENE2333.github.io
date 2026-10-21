@@ -357,7 +357,7 @@ body::before {
   cursor: pointer;
   position: relative;
   display: block;
-  aspect-ratio: 2/3.5;
+  aspect-ratio: 9/16;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .proj-card:hover {
@@ -456,7 +456,7 @@ body::before {
 }
 @media (max-width: 600px) {
   .projects-grid { grid-template-columns: 1fr; }
-  .proj-card { aspect-ratio: 2/3.5; }
+  .proj-card { aspect-ratio: 9/16; }
 }
 
 /* ── PROJECT MODAL ── */
@@ -482,26 +482,11 @@ body::before {
   overflow-y: auto;
   position: relative;
 }
-.proj-modal-header {
-  width: 100%;
-  aspect-ratio: 9/16;
-  background: var(--bg3);
-  border-radius: 18px 18px 0 0;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.proj-modal-header video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.proj-modal-header { display: none; }
 .proj-modal-header-stripe { display: none; }
 .proj-modal-content {
-  padding: 28px 32px 32px;
+  padding: 32px 32px 32px;
+  border-radius: 18px;
 }
 .proj-modal-platform {
   font-size: 11px;
@@ -1386,17 +1371,6 @@ const projects = {
 function openModal(id) {
   const p = projects[id];
   if (!p) return;
-  const vid = document.getElementById('modal-video');
-  document.getElementById('modal-thumb').style.background = 'var(--bg3)';
-  if (p.video) {
-    vid.src = p.video;
-    vid.style.display = 'block';
-    vid.load();
-    vid.play().catch(() => {});
-  } else {
-    vid.src = '';
-    vid.style.display = 'none';
-  }
   document.getElementById('modal-platform').textContent = p.platform;
   document.getElementById('modal-name').textContent = p.name;
   document.getElementById('modal-desc').textContent = p.desc;
@@ -1413,9 +1387,6 @@ function closeModal(e) {
 function closeModalBtn() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
-  const vid = document.getElementById('modal-video');
-  vid.pause();
-  vid.src = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
